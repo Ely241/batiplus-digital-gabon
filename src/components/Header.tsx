@@ -15,7 +15,7 @@ const Header = () => {
   return (
     <header className="bg-white shadow-lg sticky top-0 z-50">
       {/* Top Bar */}
-      <div className="bg-batiplus-blue-700 text-white py-2">
+      <div className="bg-batiplus-black-700 text-white py-2">
         <div className="container mx-auto px-4 flex justify-between items-center text-sm">
           <div className="flex items-center space-x-4">
             <div className="flex items-center space-x-1">
@@ -38,14 +38,15 @@ const Header = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center space-x-2">
-            <div className="bg-batiplus-blue-500 text-white p-2 rounded-lg font-bold">
+            <div className="bg-batiplus-black-500 text-white p-2 rounded-lg font-bold">
               <span className="text-xl font-montserrat">B+</span>
             </div>
             <div>
-              <h1 className="text-xl font-montserrat font-bold text-batiplus-blue-700">
-                Batiplus
+              <h1 className="text-xl font-montserrat font-bold">
+                <span className="text-batiplus-black-500">Bati</span>
+                <span className="text-batiplus-red-500">plus</span>
               </h1>
-              <p className="text-xs text-gray-600">Matériaux de Construction</p>
+              <p className="text-xs text-batiplus-gray-500">Matériaux de Construction</p>
             </div>
           </div>
 
@@ -57,7 +58,7 @@ const Header = () => {
                 placeholder="Rechercher des matériaux..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 pr-4 py-2 border-gray-300 focus:border-batiplus-orange-500"
+                className="pl-10 pr-4 py-2 border-gray-300 focus:border-batiplus-red-500"
               />
               <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
             </div>
@@ -65,20 +66,20 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-6">
-            <a href="#catalog" className="text-gray-700 hover:text-batiplus-blue-500 font-medium transition-colors">
+            <a href="#catalog" className="text-gray-700 hover:text-batiplus-black-500 font-medium transition-colors">
               Catalogue
             </a>
-            <a href="#calculators" className="text-gray-700 hover:text-batiplus-blue-500 font-medium transition-colors">
+            <a href="#calculators" className="text-gray-700 hover:text-batiplus-black-500 font-medium transition-colors">
               Calculateurs
             </a>
-            <a href="#services" className="text-gray-700 hover:text-batiplus-blue-500 font-medium transition-colors">
+            <a href="#services" className="text-gray-700 hover:text-batiplus-black-500 font-medium transition-colors">
               Services
             </a>
-            <Button variant="outline" className="border-batiplus-orange-500 text-batiplus-orange-500 hover:bg-batiplus-orange-50">
+            <Button variant="outline" className="border-batiplus-red-500 text-batiplus-red-500 hover:bg-red-50">
               <ShoppingCart className="h-4 w-4 mr-2" />
               Panier
             </Button>
-            <Button className="bg-batiplus-orange-500 hover:bg-batiplus-orange-600">
+            <Button className="bg-batiplus-red-500 hover:bg-batiplus-red-600">
               Devis Gratuit
             </Button>
           </nav>
@@ -86,7 +87,7 @@ const Header = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={toggleMenu}
-            className="md:hidden p-2 text-gray-700 hover:text-batiplus-blue-500"
+            className="md:hidden p-2 text-gray-700 hover:text-batiplus-black-500"
           >
             {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
@@ -110,13 +111,13 @@ const Header = () => {
         {isMenuOpen && (
           <nav className="md:hidden mt-4 py-4 border-t border-gray-200 animate-fade-in">
             <div className="flex flex-col space-y-4">
-              <a href="#catalog" className="text-gray-700 hover:text-batiplus-blue-500 font-medium transition-colors">
+              <a href="#catalog" className="text-gray-700 hover:text-batiplus-black-500 font-medium transition-colors">
                 Catalogue
               </a>
-              <a href="#calculators" className="text-gray-700 hover:text-batiplus-blue-500 font-medium transition-colors">
+              <a href="#calculators" className="text-gray-700 hover:text-batiplus-black-500 font-medium transition-colors">
                 Calculateurs
               </a>
-              <a href="#services" className="text-gray-700 hover:text-batiplus-blue-500 font-medium transition-colors">
+              <a href="#services" className="text-gray-700 hover:text-batiplus-black-500 font-medium transition-colors">
                 Services
               </a>
               <div className="flex space-x-3 pt-2">
@@ -124,7 +125,7 @@ const Header = () => {
                   <ShoppingCart className="h-4 w-4 mr-2" />
                   Panier
                 </Button>
-                <Button size="sm" className="flex-1 bg-batiplus-orange-500 hover:bg-batiplus-orange-600">
+                <Button size="sm" className="flex-1 bg-batiplus-red-500 hover:bg-batiplus-red-600">
                   Devis Gratuit
                 </Button>
               </div>

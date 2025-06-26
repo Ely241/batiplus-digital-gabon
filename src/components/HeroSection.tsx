@@ -46,7 +46,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative bg-gradient-to-br from-batiplus-blue-900 via-batiplus-blue-700 to-batiplus-blue-500 overflow-hidden">
+    <section className="relative bg-gradient-to-br from-batiplus-black-900 via-batiplus-black-700 to-batiplus-black-500 overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent transform -skew-y-12"></div>
@@ -59,7 +59,7 @@ const HeroSection = () => {
             <div className="flex items-center space-x-2 mb-4">
               <div className="flex space-x-1">
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="h-5 w-5 fill-batiplus-orange-500 text-batiplus-orange-500" />
+                  <Star key={i} className="h-5 w-5 fill-batiplus-red-500 text-batiplus-red-500" />
                 ))}
               </div>
               <span className="text-sm font-medium">4/5 - 747 avis clients</span>
@@ -69,40 +69,40 @@ const HeroSection = () => {
               {slides[currentSlide].title}
             </h1>
 
-            <p className="text-xl md:text-2xl text-batiplus-blue-100 font-medium">
+            <p className="text-xl md:text-2xl text-gray-300 font-medium">
               {slides[currentSlide].subtitle}
             </p>
 
-            <p className="text-lg text-batiplus-blue-50 leading-relaxed max-w-xl">
+            <p className="text-lg text-gray-200 leading-relaxed max-w-xl">
               {slides[currentSlide].description}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <Button size="lg" className="bg-batiplus-orange-500 hover:bg-batiplus-orange-600 text-white px-8 py-3 text-lg font-semibold">
+              <Button size="lg" className="bg-batiplus-red-500 hover:bg-batiplus-red-600 text-white px-8 py-3 text-lg font-semibold">
                 {slides[currentSlide].cta}
               </Button>
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-batiplus-blue-700 px-8 py-3 text-lg font-semibold">
+              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-batiplus-black-700 px-8 py-3 text-lg font-semibold">
                 <Phone className="h-5 w-5 mr-2" />
                 +241 62 02 11 11
               </Button>
             </div>
 
             {/* Trust Indicators */}
-            <div className="grid grid-cols-3 gap-6 pt-8 border-t border-batiplus-blue-400/30">
+            <div className="grid grid-cols-3 gap-6 pt-8 border-t border-gray-600">
               <div className="text-center">
-                <Truck className="h-8 w-8 mx-auto mb-2 text-batiplus-orange-500" />
+                <Truck className="h-8 w-8 mx-auto mb-2 text-batiplus-red-500" />
                 <p className="text-sm font-medium">Livraison</p>
-                <p className="text-xs text-batiplus-blue-200">Même jour</p>
+                <p className="text-xs text-gray-300">Même jour</p>
               </div>
               <div className="text-center">
-                <Calculator className="h-8 w-8 mx-auto mb-2 text-batiplus-orange-500" />
+                <Calculator className="h-8 w-8 mx-auto mb-2 text-batiplus-red-500" />
                 <p className="text-sm font-medium">Calculateurs</p>
-                <p className="text-xs text-batiplus-blue-200">Gratuits</p>
+                <p className="text-xs text-gray-300">Gratuits</p>
               </div>
               <div className="text-center">
-                <Phone className="h-8 w-8 mx-auto mb-2 text-batiplus-orange-500" />
+                <Phone className="h-8 w-8 mx-auto mb-2 text-batiplus-red-500" />
                 <p className="text-sm font-medium">Conseil</p>
-                <p className="text-xs text-batiplus-blue-200">Technique</p>
+                <p className="text-xs text-gray-300">Technique</p>
               </div>
             </div>
           </div>
@@ -139,7 +139,7 @@ const HeroSection = () => {
                   key={index}
                   onClick={() => setCurrentSlide(index)}
                   className={`w-3 h-3 rounded-full transition-colors ${
-                    index === currentSlide ? 'bg-batiplus-orange-500' : 'bg-white/40'
+                    index === currentSlide ? 'bg-batiplus-red-500' : 'bg-white/40'
                   }`}
                 />
               ))}

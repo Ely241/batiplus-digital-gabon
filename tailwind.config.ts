@@ -26,7 +26,7 @@ export default {
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				primary: {
-					DEFAULT: '#1E40AF',
+					DEFAULT: '#1a1a1a',
 					foreground: '#FFFFFF'
 				},
 				secondary: {
@@ -63,20 +63,28 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				'batiplus-blue': {
-					50: '#eff6ff',
-					100: '#dbeafe',
-					500: '#1E40AF',
-					600: '#1d4ed8',
-					700: '#1e3a8a',
-					900: '#1e3a8a'
+				'batiplus-black': {
+					50: '#f6f6f6',
+					100: '#e7e7e7',
+					500: '#1a1a1a',
+					600: '#171717',
+					700: '#141414',
+					900: '#0f0f0f'
 				},
-				'batiplus-orange': {
-					50: '#fff7ed',
-					100: '#ffedd5',
-					500: '#F97316',
-					600: '#ea580c',
-					700: '#c2410c'
+				'batiplus-red': {
+					50: '#fef2f2',
+					100: '#fee2e2',
+					500: '#dc2626',
+					600: '#dc2626',
+					700: '#b91c1c'
+				},
+				'batiplus-gray': {
+					50: '#f9fafb',
+					100: '#f3f4f6',
+					400: '#9ca3af',
+					500: '#6b7280',
+					600: '#4b5563',
+					700: '#374151'
 				}
 			},
 			borderRadius: {

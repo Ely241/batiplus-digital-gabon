@@ -1,10 +1,9 @@
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { Search, Plus, Minus, Download, Calculator, Package, Hammer, Wrench, Zap, Droplet, Palette, Shield, Home, Waves, Battery } from 'lucide-react';
+import { Search, Plus, Minus, Download, Calculator, Package, Hammer, Wrench, Zap, Droplet, Palette, Shield, Home, Waves, Battery, Truck, MapPin } from 'lucide-react';
 import jsPDF from 'jspdf';
 
 interface Product {
@@ -24,10 +23,30 @@ interface SelectedProduct extends Product {
   quantity: number;
 }
 
+interface DeliveryOption {
+  id: string;
+  zone: string;
+  price: number;
+  duration: string;
+}
+
 const ComprehensiveProductCatalog = () => {
   const [selectedProducts, setSelectedProducts] = useState<SelectedProduct[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [deliveryAddress, setDeliveryAddress] = useState('');
+  const [selectedDelivery, setSelectedDelivery] = useState<DeliveryOption | null>(null);
+  const [showDeliveryOptions, setShowDeliveryOptions] = useState(false);
+
+  const deliveryZones: DeliveryOption[] = [
+    { id: 'centre', zone: 'Centre-ville', price: 15000, duration: '2-3h' },
+    { id: 'akanda', zone: 'Akanda', price: 18000, duration: '3-4h' },
+    { id: 'oloumi', zone: 'Oloumi', price: 12000, duration: '1-2h' },
+    { id: 'batterie4', zone: 'Batterie IV', price: 20000, duration: '3-4h' },
+    { id: 'lalala', zone: 'Lalala', price: 25000, duration: '4-5h' },
+    { id: 'nombakel', zone: 'Nombakélé', price: 22000, duration: '4-5h' },
+    { id: 'autre', zone: 'Autre zone Libreville', price: 30000, duration: '5-6h' }
+  ];
 
   const categories = [
     { id: 'gros-oeuvre', name: 'Gros Œuvre & Structure', icon: Package, color: 'bg-gray-50' },
@@ -141,6 +160,12 @@ const ComprehensiveProductCatalog = () => {
     }, 0);
   };
 
+  const getFinalTotal = () => {
+    const productsTotal = getTotalPrice();
+    const deliveryPrice = selectedDelivery ? selectedDelivery.price : 0;
+    return productsTotal + deliveryPrice;
+  };
+
   const generatePDF = () => {
     const doc = new jsPDF();
     
@@ -155,8 +180,26 @@ const ComprehensiveProductCatalog = () => {
     // Ligne de séparation
     doc.line(20, 45, 190, 45);
     
-    // Tableau des produits
+    // Informations livraison si sélectionnée
     let y = 55;
+    if (selectedDelivery && deliveryAddress) {
+      doc.setFontSize(12);
+      doc.text('LIVRAISON À DOMICILE', 20, y);
+      y += 8;
+      doc.setFontSize(10);
+      doc.text(`Adresse: ${deliveryAddress}`, 20, y);
+      y += 5;
+      doc.text(`Zone: ${selectedDelivery.zone}`, 20, y);  
+      y += 5;
+      doc.text(`Délai: ${selectedDelivery.duration}`, 20, y);
+      y += 5;
+      doc.text(`Frais livraison: ${selectedDelivery.price.toLocaleString()} FCFA`, 20, y);
+      y += 10;
+      doc.line(20, y, 190, y);
+      y += 10;
+    }
+    
+    // Tableau des produits
     doc.setFontSize(10);
     doc.text('Produit', 20, y);
     doc.text('Qté', 100, y);
@@ -188,18 +231,33 @@ const ComprehensiveProductCatalog = () => {
       }
     });
     
+    // Sous-total et frais de livraison
+    y += 10;
+    doc.line(20, y, 190, y);
+    y += 10;
+    doc.setFontSize(10);
+    doc.text(`Sous-total produits: ${getTotalPrice().toLocaleString()} FCFA`, 20, y);
+    
+    if (selectedDelivery) {
+      y += 8;
+      doc.text(`Frais de livraison: ${selectedDelivery.price.toLocaleString()} FCFA`, 20, y);
+    }
+    
     // Total général
     y += 10;
     doc.line(20, y, 190, y);
     y += 10;
     doc.setFontSize(12);
-    doc.text(`TOTAL GÉNÉRAL: ${getTotalPrice().toLocaleString()} FCFA`, 20, y);
+    doc.text(`TOTAL GÉNÉRAL: ${getFinalTotal().toLocaleString()} FCFA`, 20, y);
     
     // Note de bas de page
     y += 20;
     doc.setFontSize(8);
     doc.text('Ce document est à présenter en magasin pour faciliter votre achat.', 20, y);
     doc.text('Prix indicatifs, susceptibles de variations selon les stocks.', 20, y + 5);
+    if (selectedDelivery) {
+      doc.text('Les frais de livraison peuvent varier selon les conditions d\'accès.', 20, y + 10);
+    }
     
     doc.save(`batiplus-liste-prix-${new Date().toISOString().split('T')[0]}.pdf`);
   };
@@ -263,11 +321,61 @@ const ComprehensiveProductCatalog = () => {
                   <Calculator className="h-5 w-5 mr-2" />
                   Ma Sélection ({selectedProducts.length} produits)
                 </h3>
-                <Button onClick={generatePDF} className="bg-batiplus-red-500 hover:bg-batiplus-red-600">
-                  <Download className="h-4 w-4 mr-2" />
-                  Télécharger PDF
-                </Button>
+                <div className="flex gap-2">
+                  <Button 
+                    onClick={() => setShowDeliveryOptions(!showDeliveryOptions)}
+                    variant="outline"
+                    className="border-batiplus-red-300 text-batiplus-red-600 hover:bg-batiplus-red-100"
+                  >
+                    <Truck className="h-4 w-4 mr-2" />
+                    Livraison
+                  </Button>
+                  <Button onClick={generatePDF} className="bg-batiplus-red-500 hover:bg-batiplus-red-600">
+                    <Download className="h-4 w-4 mr-2" />
+                    Télécharger PDF
+                  </Button>
+                </div>
               </div>
+
+              {/* Options de livraison */}
+              {showDeliveryOptions && (
+                <div className="mb-6 p-4 bg-white rounded-lg border border-batiplus-red-200">
+                  <h4 className="font-semibold mb-3 flex items-center">
+                    <MapPin className="h-4 w-4 mr-2" />
+                    Livraison à domicile
+                  </h4>
+                  
+                  <div className="mb-4">
+                    <Input
+                      type="text"
+                      placeholder="Adresse de livraison complète..."
+                      value={deliveryAddress}
+                      onChange={(e) => setDeliveryAddress(e.target.value)}
+                      className="mb-3"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                    {deliveryZones.map((zone) => (
+                      <div
+                        key={zone.id}
+                        onClick={() => setSelectedDelivery(zone)}
+                        className={`p-3 rounded-lg border cursor-pointer transition-all ${
+                          selectedDelivery?.id === zone.id
+                            ? 'border-batiplus-red-500 bg-batiplus-red-50'
+                            : 'border-gray-200 hover:border-batiplus-red-300'
+                        }`}
+                      >
+                        <div className="font-medium text-sm">{zone.zone}</div>
+                        <div className="text-xs text-gray-600">Délai: {zone.duration}</div>
+                        <div className="text-sm font-semibold text-batiplus-red-600">
+                          {zone.price.toLocaleString()} FCFA
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
               
               <div className="space-y-2 mb-4 max-h-40 overflow-y-auto">
                 {selectedProducts.map((product) => (
@@ -299,12 +407,21 @@ const ComprehensiveProductCatalog = () => {
                 ))}
               </div>
               
-              <div className="text-right">
+              <div className="text-right space-y-2">
+                <div className="text-lg">
+                  Sous-total: {getTotalPrice().toLocaleString()} FCFA
+                </div>
+                {selectedDelivery && (
+                  <div className="text-lg">
+                    Livraison {selectedDelivery.zone}: {selectedDelivery.price.toLocaleString()} FCFA
+                  </div>
+                )}
                 <div className="text-2xl font-bold text-batiplus-red-600">
-                  Total: {getTotalPrice().toLocaleString()} FCFA
+                  Total: {getFinalTotal().toLocaleString()} FCFA
                 </div>
                 <p className="text-sm text-gray-600">
                   Document PDF à présenter en magasin pour faciliter votre achat
+                  {selectedDelivery && " ou pour confirmer votre livraison"}
                 </p>
               </div>
             </CardContent>

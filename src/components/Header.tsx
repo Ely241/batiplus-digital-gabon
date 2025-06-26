@@ -1,0 +1,139 @@
+
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Search, Menu, X, ShoppingCart, Phone, MapPin } from 'lucide-react';
+
+const Header = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  return (
+    <header className="bg-white shadow-lg sticky top-0 z-50">
+      {/* Top Bar */}
+      <div className="bg-batiplus-blue-700 text-white py-2">
+        <div className="container mx-auto px-4 flex justify-between items-center text-sm">
+          <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-1">
+              <Phone className="h-4 w-4" />
+              <span>+241 62 02 11 11</span>
+            </div>
+            <div className="flex items-center space-x-1">
+              <MapPin className="h-4 w-4" />
+              <span>Avenue Akandé, Libreville</span>
+            </div>
+          </div>
+          <div className="hidden md:block">
+            <span>Lun-Ven 8h-18h | Sam 8h-12h30</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Header */}
+      <div className="container mx-auto px-4 py-4">
+        <div className="flex items-center justify-between">
+          {/* Logo */}
+          <div className="flex items-center space-x-2">
+            <div className="bg-batiplus-blue-500 text-white p-2 rounded-lg font-bold">
+              <span className="text-xl font-montserrat">B+</span>
+            </div>
+            <div>
+              <h1 className="text-xl font-montserrat font-bold text-batiplus-blue-700">
+                Batiplus
+              </h1>
+              <p className="text-xs text-gray-600">Matériaux de Construction</p>
+            </div>
+          </div>
+
+          {/* Search Bar - Desktop */}
+          <div className="hidden md:flex flex-1 max-w-md mx-8">
+            <div className="relative w-full">
+              <Input
+                type="text"
+                placeholder="Rechercher des matériaux..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-10 pr-4 py-2 border-gray-300 focus:border-batiplus-orange-500"
+              />
+              <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
+            </div>
+          </div>
+
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center space-x-6">
+            <a href="#catalog" className="text-gray-700 hover:text-batiplus-blue-500 font-medium transition-colors">
+              Catalogue
+            </a>
+            <a href="#calculators" className="text-gray-700 hover:text-batiplus-blue-500 font-medium transition-colors">
+              Calculateurs
+            </a>
+            <a href="#services" className="text-gray-700 hover:text-batiplus-blue-500 font-medium transition-colors">
+              Services
+            </a>
+            <Button variant="outline" className="border-batiplus-orange-500 text-batiplus-orange-500 hover:bg-batiplus-orange-50">
+              <ShoppingCart className="h-4 w-4 mr-2" />
+              Panier
+            </Button>
+            <Button className="bg-batiplus-orange-500 hover:bg-batiplus-orange-600">
+              Devis Gratuit
+            </Button>
+          </nav>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={toggleMenu}
+            className="md:hidden p-2 text-gray-700 hover:text-batiplus-blue-500"
+          >
+            {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
+        </div>
+
+        {/* Mobile Search */}
+        <div className="md:hidden mt-4">
+          <div className="relative">
+            <Input
+              type="text"
+              placeholder="Rechercher des matériaux..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-10 pr-4 py-2 w-full"
+            />
+            <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
+          </div>
+        </div>
+
+        {/* Mobile Navigation */}
+        {isMenuOpen && (
+          <nav className="md:hidden mt-4 py-4 border-t border-gray-200 animate-fade-in">
+            <div className="flex flex-col space-y-4">
+              <a href="#catalog" className="text-gray-700 hover:text-batiplus-blue-500 font-medium transition-colors">
+                Catalogue
+              </a>
+              <a href="#calculators" className="text-gray-700 hover:text-batiplus-blue-500 font-medium transition-colors">
+                Calculateurs
+              </a>
+              <a href="#services" className="text-gray-700 hover:text-batiplus-blue-500 font-medium transition-colors">
+                Services
+              </a>
+              <div className="flex space-x-3 pt-2">
+                <Button variant="outline" size="sm" className="flex-1">
+                  <ShoppingCart className="h-4 w-4 mr-2" />
+                  Panier
+                </Button>
+                <Button size="sm" className="flex-1 bg-batiplus-orange-500 hover:bg-batiplus-orange-600">
+                  Devis Gratuit
+                </Button>
+              </div>
+            </div>
+          </nav>
+        )}
+      </div>
+    </header>
+  );
+};
+
+export default Header;

@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Search, Menu, X, ShoppingCart, Phone, MapPin } from 'lucide-react';
+import { Search, Menu, X, Calculator, Phone, MapPin } from 'lucide-react';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -24,11 +24,11 @@ const Header = () => {
             </div>
             <div className="flex items-center space-x-1">
               <MapPin className="h-4 w-4" />
-              <span>Avenue Akandé, Libreville</span>
+              <span>Zone Industrielle Oloumi & Akanda Beaulieu</span>
             </div>
           </div>
           <div className="hidden md:block">
-            <span>Lun-Ven 8h-18h | Sam 8h-12h30</span>
+            <span>Lun-Sam 8h-18h | 26 ans d'expérience</span>
           </div>
         </div>
       </div>
@@ -75,12 +75,9 @@ const Header = () => {
             <a href="#services" className="text-gray-700 hover:text-batiplus-black-500 font-medium transition-colors">
               Services
             </a>
-            <Button variant="outline" className="border-batiplus-red-500 text-batiplus-red-500 hover:bg-red-50">
-              <ShoppingCart className="h-4 w-4 mr-2" />
-              Panier
-            </Button>
             <Button className="bg-batiplus-red-500 hover:bg-batiplus-red-600">
-              Devis Gratuit
+              <Calculator className="h-4 w-4 mr-2" />
+              Calculateur Prix
             </Button>
           </nav>
 
@@ -120,15 +117,10 @@ const Header = () => {
               <a href="#services" className="text-gray-700 hover:text-batiplus-black-500 font-medium transition-colors">
                 Services
               </a>
-              <div className="flex space-x-3 pt-2">
-                <Button variant="outline" size="sm" className="flex-1">
-                  <ShoppingCart className="h-4 w-4 mr-2" />
-                  Panier
-                </Button>
-                <Button size="sm" className="flex-1 bg-batiplus-red-500 hover:bg-batiplus-red-600">
-                  Devis Gratuit
-                </Button>
-              </div>
+              <Button size="sm" className="bg-batiplus-red-500 hover:bg-batiplus-red-600">
+                <Calculator className="h-4 w-4 mr-2" />
+                Calculateur Prix
+              </Button>
             </div>
           </nav>
         )}

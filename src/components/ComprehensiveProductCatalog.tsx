@@ -3,7 +3,9 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { Search, Plus, Minus, Download, Calculator, Package, Hammer, Wrench, Zap, Droplet, Palette, Shield, Home, Waves, Battery, Truck, MapPin } from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
+import { Search, Plus, Minus, Download, Calculator, Package, Hammer, Wrench, Zap, Droplet, Palette, Shield, Home, Waves, Battery, Truck, MapPin, Filter, SortAsc, Star } from 'lucide-react';
 import jsPDF from 'jspdf';
 
 interface Product {
@@ -17,6 +19,7 @@ interface Product {
   description: string;
   inStock: boolean;
   promotion?: number;
+  isPopular?: boolean;
 }
 
 interface SelectedProduct extends Product {
@@ -34,6 +37,10 @@ const ComprehensiveProductCatalog = () => {
   const [selectedProducts, setSelectedProducts] = useState<SelectedProduct[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [selectedBrand, setSelectedBrand] = useState('all');
+  const [sortBy, setSortBy] = useState('name');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productsPerPage] = useState(12);
   const [deliveryAddress, setDeliveryAddress] = useState('');
   const [selectedDelivery, setSelectedDelivery] = useState<DeliveryOption | null>(null);
   const [showDeliveryOptions, setShowDeliveryOptions] = useState(false);
@@ -61,22 +68,25 @@ const ComprehensiveProductCatalog = () => {
     { id: 'energie', name: 'Énergie & Groupes Électrogènes', icon: Battery, color: 'bg-indigo-50' }
   ];
 
+  // Get unique brands for filter
+  const brands = ['all', ...Array.from(new Set(products.filter(p => p.brand).map(p => p.brand)))];
+
   const products: Product[] = [
     // Gros Œuvre & Structure
-    { id: '1', name: 'Fer à béton Ø8mm', category: 'gros-oeuvre', subcategory: 'Acier & Fer à Béton', price: 8500, unit: 'barre 12m', description: 'Fer à béton haute adhérence', inStock: true },
+    { id: '1', name: 'Fer à béton Ø8mm', category: 'gros-oeuvre', subcategory: 'Acier & Fer à Béton', price: 8500, unit: 'barre 12m', description: 'Fer à béton haute adhérence', inStock: true, isPopular: true },
     { id: '2', name: 'Fer à béton Ø10mm', category: 'gros-oeuvre', subcategory: 'Acier & Fer à Béton', price: 12000, unit: 'barre 12m', description: 'Fer à béton haute adhérence', inStock: true },
-    { id: '3', name: 'Ciment Portland CPA 55', category: 'gros-oeuvre', subcategory: 'Ciment & Béton', price: 4500, unit: 'sac 50kg', description: 'Ciment Portland certifié', inStock: true },
+    { id: '3', name: 'Ciment Portland CPA 55', category: 'gros-oeuvre', subcategory: 'Ciment & Béton', price: 4500, unit: 'sac 50kg', description: 'Ciment Portland certifié', inStock: true, isPopular: true },
     { id: '4', name: 'Béton prêt C25/30', category: 'gros-oeuvre', subcategory: 'Ciment & Béton', price: 85000, unit: 'm³', description: 'Béton prêt à l\'emploi', inStock: true },
     { id: '5', name: 'Treillis soudé ST25', category: 'gros-oeuvre', subcategory: 'Acier & Fer à Béton', price: 15000, unit: 'panneau 2x3m', description: 'Treillis soudé pour dallage', inStock: true },
 
     // Électricité & Éclairage
     { id: '6', name: 'Tableau électrique 4 modules', category: 'electricite', subcategory: 'Équipements Électriques', brand: 'Schneider Electric', price: 25000, unit: 'pièce', description: 'Tableau électrique 4 modules', inStock: true },
-    { id: '7', name: 'Câble H07V-U 2.5mm²', category: 'electricite', subcategory: 'Équipements Électriques', brand: 'Legrand', price: 1200, unit: 'mètre', description: 'Câble électrique unifilaire', inStock: true },
+    { id: '7', name: 'Câble H07V-U 2.5mm²', category: 'electricite', subcategory: 'Équipements Électriques', brand: 'Legrand', price: 1200, unit: 'mètre', description: 'Câble électrique unifilaire', inStock: true, isPopular: true },
     { id: '8', name: 'Projecteur LED 50W', category: 'electricite', subcategory: 'Luminaires', brand: 'Eglo', price: 18000, unit: 'pièce', description: 'Projecteur LED extérieur', inStock: true },
     { id: '9', name: 'Prise 2P+T', category: 'electricite', subcategory: 'Équipements Électriques', brand: 'Legrand', price: 3500, unit: 'pièce', description: 'Prise de courant étanche', inStock: true },
 
     // Carrelage & Revêtements
-    { id: '10', name: 'Carrelage poli 60x60', category: 'carrelage', subcategory: 'Carrelage Sol & Mur', brand: 'Pamesa', price: 12000, unit: 'm²', description: 'Carrelage poli brillant', inStock: true },
+    { id: '10', name: 'Carrelage poli 60x60', category: 'carrelage', subcategory: 'Carrelage Sol & Mur', brand: 'Pamesa', price: 12000, unit: 'm²', description: 'Carrelage poli brillant', inStock: true, isPopular: true },
     { id: '11', name: 'Faïence salle de bain 30x60', category: 'carrelage', subcategory: 'Carrelage Sol & Mur', brand: 'STN Cerámica', price: 8500, unit: 'm²', description: 'Faïence moderne', inStock: true },
     { id: '12', name: 'Colle carrelage C2', category: 'carrelage', subcategory: 'Accessoires Pose', price: 4500, unit: 'sac 25kg', description: 'Colle carrelage haute performance', inStock: true },
     { id: '13', name: 'Outils carreleur Rubi', category: 'carrelage', subcategory: 'Accessoires Pose', brand: 'Rubi', price: 35000, unit: 'kit', description: 'Kit complet carreleur', inStock: true },
@@ -89,7 +99,7 @@ const ComprehensiveProductCatalog = () => {
     { id: '18', name: 'Pompe surpresseur', category: 'sanitaire', subcategory: 'Plomberie Technique', brand: 'DAB', price: 125000, unit: 'pièce', description: 'Surpresseur automatique', inStock: true },
 
     // Peinture & Finitions
-    { id: '19', name: 'Peinture acrylique mate', category: 'peinture', subcategory: 'Peintures', brand: 'Astral', price: 15000, unit: 'pot 15L', description: 'Peinture intérieure mate', inStock: true, promotion: 15 },
+    { id: '19', name: 'Peinture acrylique mate', category: 'peinture', subcategory: 'Peintures', brand: 'Astral', price: 15000, unit: 'pot 15L', description: 'Peinture intérieure mate', inStock: true, promotion: 15, isPopular: true },
     { id: '20', name: 'Peinture façade', category: 'peinture', subcategory: 'Peintures', brand: 'Astral', price: 18000, unit: 'pot 15L', description: 'Peinture extérieure', inStock: true, promotion: 15 },
     { id: '21', name: 'Enduit de façade', category: 'peinture', subcategory: 'Peintures', price: 12000, unit: 'sac 25kg', description: 'Enduit décoratif extérieur', inStock: true },
     { id: '22', name: 'Membrane étanchéité', category: 'peinture', subcategory: 'Étanchéité', brand: 'Sika', price: 25000, unit: 'rouleau 10m²', description: 'Membrane bitumineuse', inStock: true },
@@ -126,8 +136,26 @@ const ComprehensiveProductCatalog = () => {
                          product.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          product.brand?.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;
-    return matchesSearch && matchesCategory;
+    const matchesBrand = selectedBrand === 'all' || product.brand === selectedBrand;
+    return matchesSearch && matchesCategory && matchesBrand;
   });
+
+  const sortedProducts = [...filteredProducts].sort((a, b) => {
+    switch (sortBy) {
+      case 'price-asc':
+        return a.price - b.price;
+      case 'price-desc':
+        return b.price - a.price;
+      case 'popular':
+        return (b.isPopular ? 1 : 0) - (a.isPopular ? 1 : 0);
+      default:
+        return a.name.localeCompare(b.name);
+    }
+  });
+
+  const totalPages = Math.ceil(sortedProducts.length / productsPerPage);
+  const startIndex = (currentPage - 1) * productsPerPage;
+  const paginatedProducts = sortedProducts.slice(startIndex, startIndex + productsPerPage);
 
   const addProduct = (product: Product) => {
     const existingProduct = selectedProducts.find(p => p.id === product.id);
@@ -265,54 +293,108 @@ const ComprehensiveProductCatalog = () => {
   return (
     <section id="catalog" className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
-        {/* En-tête */}
+        {/* En-tête amélioré */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold font-montserrat text-gray-900 mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold font-montserrat text-batiplus-black-500 mb-4">
             Catalogue Complet Batiplus
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl text-batiplus-gray-600 max-w-3xl mx-auto mb-6">
             Plus de 1000 références depuis 1998 • Capital 1 milliard FCFA
           </p>
+          <div className="flex justify-center space-x-8 text-sm text-batiplus-gray-500">
+            <div className="flex items-center">
+              <Package className="h-4 w-4 mr-2 text-batiplus-red-500" />
+              10 catégories
+            </div>
+            <div className="flex items-center">
+              <Star className="h-4 w-4 mr-2 text-batiplus-red-500" />
+              20+ marques premium
+            </div>
+            <div className="flex items-center">
+              <Truck className="h-4 w-4 mr-2 text-batiplus-red-500" />
+              Livraison rapide
+            </div>
+          </div>
         </div>
 
-        {/* Barre de recherche et filtres */}
+        {/* Barre de recherche et filtres améliorés */}
         <div className="mb-8">
-          <div className="flex flex-col md:flex-row gap-4 mb-6">
+          <div className="flex flex-col lg:flex-row gap-4 mb-6">
             <div className="relative flex-1">
               <Input
                 type="text"
                 placeholder="Rechercher un produit, marque, référence..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10"
+                className="pl-10 h-12 text-lg"
               />
-              <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
+              <Search className="absolute left-3 top-3.5 h-5 w-5 text-gray-400" />
+            </div>
+            
+            <div className="flex gap-3">
+              <Select value={selectedBrand} onValueChange={setSelectedBrand}>
+                <SelectTrigger className="w-48">
+                  <Filter className="h-4 w-4 mr-2" />
+                  <SelectValue placeholder="Toutes les marques" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Toutes les marques</SelectItem>
+                  {brands.slice(1).map((brand) => (
+                    <SelectItem key={brand} value={brand!}>{brand}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
+              <Select value={sortBy} onValueChange={setSortBy}>
+                <SelectTrigger className="w-48">
+                  <SortAsc className="h-4 w-4 mr-2" />
+                  <SelectValue placeholder="Trier par" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="name">Nom A-Z</SelectItem>
+                  <SelectItem value="price-asc">Prix croissant</SelectItem>
+                  <SelectItem value="price-desc">Prix décroissant</SelectItem>
+                  <SelectItem value="popular">Plus populaires</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
           
-          {/* Filtres par catégorie */}
+          {/* Filtres par catégorie améliorés */}
           <div className="flex flex-wrap gap-2 mb-6">
             <Button
               variant={selectedCategory === 'all' ? 'default' : 'outline'}
               onClick={() => setSelectedCategory('all')}
               size="sm"
+              className={selectedCategory === 'all' ? 'bg-batiplus-red-500 hover:bg-batiplus-red-600' : ''}
             >
-              Toutes les catégories
+              Toutes ({products.length})
             </Button>
-            {categories.map((category) => (
-              <Button
-                key={category.id}
-                variant={selectedCategory === category.id ? 'default' : 'outline'}
-                onClick={() => setSelectedCategory(category.id)}
-                size="sm"
-              >
-                {category.name}
-              </Button>
-            ))}
+            {categories.map((category) => {
+              const categoryCount = products.filter(p => p.category === category.id).length;
+              return (
+                <Button
+                  key={category.id}
+                  variant={selectedCategory === category.id ? 'default' : 'outline'}
+                  onClick={() => setSelectedCategory(category.id)}
+                  size="sm"
+                  className={selectedCategory === category.id ? 'bg-batiplus-red-500 hover:bg-batiplus-red-600' : ''}
+                >
+                  {category.name} ({categoryCount})
+                </Button>
+              );
+            })}
+          </div>
+
+          {/* Statistiques des résultats */}
+          <div className="text-sm text-batiplus-gray-600 mb-4">
+            {sortedProducts.length} produits trouvés
+            {searchQuery && ` pour "${searchQuery}"`}
+            {selectedCategory !== 'all' && ` dans ${categories.find(c => c.id === selectedCategory)?.name}`}
           </div>
         </div>
 
-        {/* Calculateur sélectionné */}
+        {/* Calculateur sélectionné - keep existing code */}
         {selectedProducts.length > 0 && (
           <Card className="mb-8 bg-batiplus-red-50 border-batiplus-red-200">
             <CardContent className="p-6">
@@ -428,21 +510,28 @@ const ComprehensiveProductCatalog = () => {
           </Card>
         )}
 
-        {/* Grille des produits */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filteredProducts.map((product) => (
-            <Card key={product.id} className="group hover:shadow-lg transition-shadow">
+        {/* Grille des produits avec pagination */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
+          {paginatedProducts.map((product) => (
+            <Card key={product.id} className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
               <CardContent className="p-4">
                 <div className="flex justify-between items-start mb-2">
                   <Badge variant="secondary" className="text-xs">
                     {categories.find(c => c.id === product.category)?.name}
                   </Badge>
-                  {product.promotion && (
-                    <Badge className="bg-red-500 text-white">-{product.promotion}%</Badge>
-                  )}
+                  <div className="flex gap-1">
+                    {product.promotion && (
+                      <Badge className="bg-red-500 text-white">-{product.promotion}%</Badge>
+                    )}
+                    {product.isPopular && (
+                      <Badge className="bg-yellow-500 text-white">
+                        <Star className="h-3 w-3" />
+                      </Badge>
+                    )}
+                  </div>
                 </div>
                 
-                <h3 className="font-semibold text-gray-900 mb-1 line-clamp-2">
+                <h3 className="font-semibold text-gray-900 mb-1 line-clamp-2 group-hover:text-batiplus-red-600 transition-colors">
                   {product.name}
                 </h3>
                 
@@ -450,7 +539,7 @@ const ComprehensiveProductCatalog = () => {
                   <p className="text-sm text-blue-600 font-medium mb-1">{product.brand}</p>
                 )}
                 
-                <p className="text-sm text-gray-600 mb-2">{product.description}</p>
+                <p className="text-sm text-gray-600 mb-2 line-clamp-2">{product.description}</p>
                 <p className="text-xs text-gray-500 mb-3">Unité: {product.unit}</p>
                 
                 <div className="flex items-center justify-between">
@@ -474,7 +563,7 @@ const ComprehensiveProductCatalog = () => {
                   <Button
                     size="sm"
                     onClick={() => addProduct(product)}
-                    className="bg-batiplus-red-500 hover:bg-batiplus-red-600"
+                    className="bg-batiplus-red-500 hover:bg-batiplus-red-600 group-hover:scale-105 transition-transform"
                     disabled={!product.inStock}
                   >
                     <Plus className="h-4 w-4" />
@@ -489,9 +578,65 @@ const ComprehensiveProductCatalog = () => {
           ))}
         </div>
 
-        {filteredProducts.length === 0 && (
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div className="flex justify-center mb-8">
+            <Pagination>
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious 
+                    onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+                    className={currentPage === 1 ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
+                  />
+                </PaginationItem>
+                
+                {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                  const pageNum = i + 1;
+                  return (
+                    <PaginationItem key={pageNum}>
+                      <PaginationLink
+                        onClick={() => setCurrentPage(pageNum)}
+                        isActive={currentPage === pageNum}
+                        className="cursor-pointer"
+                      >
+                        {pageNum}
+                      </PaginationLink>
+                    </PaginationItem>
+                  );
+                })}
+                
+                {totalPages > 5 && <PaginationEllipsis />}
+                
+                <PaginationItem>
+                  <PaginationNext 
+                    onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+                    className={currentPage === totalPages ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
+          </div>
+        )}
+
+        {sortedProducts.length === 0 && (
           <div className="text-center py-12">
-            <p className="text-gray-500 text-lg">Aucun produit trouvé pour votre recherche.</p>
+            <div className="bg-white rounded-lg p-8 shadow-lg max-w-md mx-auto">
+              <Package className="h-16 w-16 text-gray-400 mx-auto mb-4" />
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Aucun produit trouvé</h3>
+              <p className="text-gray-500 mb-4">
+                Essayez de modifier vos critères de recherche ou de navigation.
+              </p>
+              <Button 
+                onClick={() => {
+                  setSearchQuery('');
+                  setSelectedCategory('all');
+                  setSelectedBrand('all');
+                }}
+                variant="outline"
+              >
+                Réinitialiser les filtres
+              </Button>
+            </div>
           </div>
         )}
       </div>

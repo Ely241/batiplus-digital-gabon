@@ -68,9 +68,6 @@ const ComprehensiveProductCatalog = () => {
     { id: 'energie', name: 'Énergie & Groupes Électrogènes', icon: Battery, color: 'bg-indigo-50' }
   ];
 
-  // Get unique brands for filter
-  const brands = ['all', ...Array.from(new Set(products.filter(p => p.brand).map(p => p.brand)))];
-
   const products: Product[] = [
     // Gros Œuvre & Structure
     { id: '1', name: 'Fer à béton Ø8mm', category: 'gros-oeuvre', subcategory: 'Acier & Fer à Béton', price: 8500, unit: 'barre 12m', description: 'Fer à béton haute adhérence', inStock: true, isPopular: true },
@@ -130,6 +127,9 @@ const ComprehensiveProductCatalog = () => {
     { id: '37', name: 'Panneau solaire 300W', category: 'energie', subcategory: 'Alimentation Électrique', price: 125000, unit: 'pièce', description: 'Panneau monocristallin', inStock: true },
     { id: '38', name: 'Batterie 12V 100Ah', category: 'energie', subcategory: 'Alimentation Électrique', price: 65000, unit: 'pièce', description: 'Batterie AGM solaire', inStock: true }
   ];
+
+  // Get unique brands for filter
+  const brands = ['all', ...Array.from(new Set(products.filter(p => p.brand).map(p => p.brand)))];
 
   const filteredProducts = products.filter(product => {
     const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||

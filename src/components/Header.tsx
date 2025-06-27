@@ -4,12 +4,44 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Search, Menu, X, Calculator, Phone, MapPin } from 'lucide-react';
 
-const Header = () => {
+interface SelectedProduct {
+  id: string;
+  name: string;
+  price: number;
+  quantity: number;
+  unit: string;
+}
+
+interface HeaderProps {
+  selectedProducts?: SelectedProduct[];
+}
+
+const Header = ({ selectedProducts = [] }: HeaderProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const scrollToCalculator = () => {
+    const catalogSection = document.getElementById('catalog');
+    if (catalogSection) {
+      catalogSection.scrollIntoView({ behavior: 'smooth' });
+      // Si il y a des produits sélectionnés, on fait défiler un peu plus pour voir le calculateur
+      if (selectedProducts.length > 0) {
+        setTimeout(() => {
+          const calculatorSection = catalogSection.querySelector('.bg-batiplus-red-50');
+          if (calculatorSection) {
+            calculatorSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        }, 500);
+      }
+    }
+  };
+
+  const getTotalSelectedProducts = () => {
+    return selectedProducts.reduce((total, product) => total + product.quantity, 0);
   };
 
   return (
@@ -75,9 +107,17 @@ const Header = () => {
             <a href="#services" className="text-gray-700 hover:text-batiplus-black-500 font-medium transition-colors">
               Services
             </a>
-            <Button className="bg-batiplus-red-500 hover:bg-batiplus-red-600">
+            <Button 
+              onClick={scrollToCalculator}
+              className="bg-batiplus-red-500 hover:bg-batiplus-red-600 relative"
+            >
               <Calculator className="h-4 w-4 mr-2" />
               Calculateur Prix
+              {selectedProducts.length > 0 && (
+                <span className="absolute -top-2 -right-2 bg-batiplus-black-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                  {getTotalSelectedProducts()}
+                </span>
+              )}
             </Button>
           </nav>
 
@@ -117,9 +157,18 @@ const Header = () => {
               <a href="#services" className="text-gray-700 hover:text-batiplus-black-500 font-medium transition-colors">
                 Services
               </a>
-              <Button size="sm" className="bg-batiplus-red-500 hover:bg-batiplus-red-600">
+              <Button 
+                size="sm" 
+                onClick={scrollToCalculator}
+                className="bg-batiplus-red-500 hover:bg-batiplus-red-600 relative"
+              >
                 <Calculator className="h-4 w-4 mr-2" />
                 Calculateur Prix
+                {selectedProducts.length > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-batiplus-black-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                    {getTotalSelectedProducts()}
+                  </span>
+                )}
               </Button>
             </div>
           </nav>

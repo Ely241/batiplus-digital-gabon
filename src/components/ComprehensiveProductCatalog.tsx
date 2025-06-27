@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -33,7 +33,11 @@ interface DeliveryOption {
   duration: string;
 }
 
-const ComprehensiveProductCatalog = () => {
+interface ComprehensiveProductCatalogProps {
+  onSelectedProductsChange?: (products: SelectedProduct[]) => void;
+}
+
+const ComprehensiveProductCatalog = ({ onSelectedProductsChange }: ComprehensiveProductCatalogProps) => {
   const [selectedProducts, setSelectedProducts] = useState<SelectedProduct[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -289,6 +293,20 @@ const ComprehensiveProductCatalog = () => {
     
     doc.save(`batiplus-liste-prix-${new Date().toISOString().split('T')[0]}.pdf`);
   };
+
+  // Notify parent component when selected products change
+  useEffect(() => {
+    if (onSelectedProductsChange) {
+      const simplifiedProducts = selectedProducts.map(product => ({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        quantity: product.quantity,
+        unit: product.unit
+      }));
+      onSelectedProductsChange(simplifiedProducts);
+    }
+  }, [selectedProducts, onSelectedProductsChange]);
 
   return (
     <section id="catalog" className="py-16 bg-gray-50">

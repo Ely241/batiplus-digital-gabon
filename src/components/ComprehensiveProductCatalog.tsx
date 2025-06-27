@@ -297,14 +297,7 @@ const ComprehensiveProductCatalog = ({ onSelectedProductsChange }: Comprehensive
   // Notify parent component when selected products change
   useEffect(() => {
     if (onSelectedProductsChange) {
-      const simplifiedProducts = selectedProducts.map(product => ({
-        id: product.id,
-        name: product.name,
-        price: product.price,
-        quantity: product.quantity,
-        unit: product.unit
-      }));
-      onSelectedProductsChange(simplifiedProducts);
+      onSelectedProductsChange(selectedProducts);
     }
   }, [selectedProducts, onSelectedProductsChange]);
 

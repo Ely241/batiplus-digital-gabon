@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -24,20 +23,8 @@ const Header = ({ selectedProducts = [] }: HeaderProps) => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const scrollToCalculator = () => {
-    const catalogSection = document.getElementById('catalog');
-    if (catalogSection) {
-      catalogSection.scrollIntoView({ behavior: 'smooth' });
-      // Si il y a des produits sélectionnés, on fait défiler un peu plus pour voir le calculateur
-      if (selectedProducts.length > 0) {
-        setTimeout(() => {
-          const calculatorSection = catalogSection.querySelector('.bg-batiplus-red-50');
-          if (calculatorSection) {
-            calculatorSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          }
-        }, 500);
-      }
-    }
+  const navigateToEstimateur = () => {
+    window.location.href = '/estimateur';
   };
 
   const getTotalSelectedProducts = () => {
@@ -108,11 +95,11 @@ const Header = ({ selectedProducts = [] }: HeaderProps) => {
               Services
             </a>
             <Button 
-              onClick={scrollToCalculator}
+              onClick={navigateToEstimateur}
               className="bg-batiplus-red-500 hover:bg-batiplus-red-600 relative"
             >
               <Calculator className="h-4 w-4 mr-2" />
-              Calculateur Prix
+              Estimateur Instantané
               {selectedProducts.length > 0 && (
                 <span className="absolute -top-2 -right-2 bg-batiplus-black-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
                   {getTotalSelectedProducts()}
@@ -159,11 +146,11 @@ const Header = ({ selectedProducts = [] }: HeaderProps) => {
               </a>
               <Button 
                 size="sm" 
-                onClick={scrollToCalculator}
+                onClick={navigateToEstimateur}
                 className="bg-batiplus-red-500 hover:bg-batiplus-red-600 relative"
               >
                 <Calculator className="h-4 w-4 mr-2" />
-                Calculateur Prix
+                Estimateur Instantané
                 {selectedProducts.length > 0 && (
                   <span className="absolute -top-2 -right-2 bg-batiplus-black-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
                     {getTotalSelectedProducts()}

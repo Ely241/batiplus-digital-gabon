@@ -4,24 +4,10 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, Download, Calculator, Plus, Minus, Truck, MapPin, Check, Star, Clock, Shield } from 'lucide-react';
+import { ArrowLeft, Download, Calculator, Plus, Minus, Truck, Clock, Shield, Star } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useProducts } from '@/contexts/ProductContext';
 import jsPDF from 'jspdf';
-
-interface SelectedProduct {
-  id: string;
-  name: string;
-  category: string;
-  subcategory: string;
-  brand?: string;
-  price: number;
-  unit: string;
-  description: string;
-  inStock: boolean;
-  promotion?: number;
-  isPopular?: boolean;
-  quantity: number;
-}
 
 interface DeliveryOption {
   id: string;
@@ -32,10 +18,9 @@ interface DeliveryOption {
 
 const EstimateurInstantane = () => {
   const navigate = useNavigate();
-  const [selectedProducts, setSelectedProducts] = useState<SelectedProduct[]>([]);
+  const { selectedProducts, addProduct, removeProduct, getTotalPrice, getTotalQuantity } = useProducts();
   const [deliveryAddress, setDeliveryAddress] = useState('');
   const [selectedDelivery, setSelectedDelivery] = useState<DeliveryOption | null>(null);
-  const [showDeliveryOptions, setShowDeliveryOptions] = useState(false);
   const [customerName, setCustomerName] = useState('');
   const [customerPhone, setCustomerPhone] = useState('');
 
@@ -48,37 +33,6 @@ const EstimateurInstantane = () => {
     { id: 'nombakel', zone: 'Nombakélé', price: 22000, duration: '4-5h' },
     { id: 'autre', zone: 'Autre zone Libreville', price: 30000, duration: '5-6h' }
   ];
-
-  const removeProduct = (productId: string) => {
-    const existingProduct = selectedProducts.find(p => p.id === productId);
-    if (existingProduct && existingProduct.quantity > 1) {
-      setSelectedProducts(selectedProducts.map(p => 
-        p.id === productId ? { ...p, quantity: p.quantity - 1 } : p
-      ));
-    } else {
-      setSelectedProducts(selectedProducts.filter(p => p.id !== productId));
-    }
-  };
-
-  const addProduct = (product: SelectedProduct) => {
-    const existingProduct = selectedProducts.find(p => p.id === product.id);
-    if (existingProduct) {
-      setSelectedProducts(selectedProducts.map(p => 
-        p.id === product.id ? { ...p, quantity: p.quantity + 1 } : p
-      ));
-    } else {
-      setSelectedProducts([...selectedProducts, { ...product, quantity: 1 }]);
-    }
-  };
-
-  const getTotalPrice = () => {
-    return selectedProducts.reduce((total, product) => {
-      const price = product.promotion 
-        ? product.price * (1 - product.promotion / 100)
-        : product.price;
-      return total + (price * product.quantity);
-    }, 0);
-  };
 
   const getFinalTotal = () => {
     const productsTotal = getTotalPrice();

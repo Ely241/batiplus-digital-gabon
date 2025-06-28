@@ -4,23 +4,13 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Search, Menu, X, Calculator, Phone, MapPin } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useProducts } from '@/contexts/ProductContext';
 
-interface SelectedProduct {
-  id: string;
-  name: string;
-  price: number;
-  quantity: number;
-  unit: string;
-}
-
-interface HeaderProps {
-  selectedProducts?: SelectedProduct[];
-}
-
-const Header = ({ selectedProducts = [] }: HeaderProps) => {
+const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
+  const { getTotalQuantity } = useProducts();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -38,9 +28,7 @@ const Header = ({ selectedProducts = [] }: HeaderProps) => {
     setIsMenuOpen(false);
   };
 
-  const getTotalSelectedProducts = () => {
-    return selectedProducts.reduce((total, product) => total + product.quantity, 0);
-  };
+  const totalQuantity = getTotalQuantity();
 
   return (
     <header className="bg-white shadow-lg sticky top-0 z-50">
@@ -120,9 +108,9 @@ const Header = ({ selectedProducts = [] }: HeaderProps) => {
             >
               <Calculator className="h-4 w-4 mr-2" />
               Estimateur Instantané
-              {selectedProducts.length > 0 && (
+              {totalQuantity > 0 && (
                 <span className="absolute -top-2 -right-2 bg-batiplus-black-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                  {getTotalSelectedProducts()}
+                  {totalQuantity}
                 </span>
               )}
             </Button>
@@ -180,9 +168,9 @@ const Header = ({ selectedProducts = [] }: HeaderProps) => {
               >
                 <Calculator className="h-4 w-4 mr-2" />
                 Estimateur Instantané
-                {selectedProducts.length > 0 && (
+                {totalQuantity > 0 && (
                   <span className="absolute -top-2 -right-2 bg-batiplus-black-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                    {getTotalSelectedProducts()}
+                    {totalQuantity}
                   </span>
                 )}
               </Button>

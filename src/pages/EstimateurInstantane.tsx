@@ -294,13 +294,13 @@ const EstimateurInstantane = () => {
           {/* Sidebar - Résumé et options */}
           <div className="space-y-6">
             {/* Informations client */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Mes Informations</CardTitle>
+            <Card className="bg-white border-gray-200 shadow-sm">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-lg text-gray-900">Mes Informations</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Nom complet
                   </label>
                   <Input
@@ -308,10 +308,11 @@ const EstimateurInstantane = () => {
                     placeholder="Votre nom..."
                     value={customerName}
                     onChange={(e) => setCustomerName(e.target.value)}
+                    className="border-gray-300 focus:border-batiplus-red-500"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Téléphone
                   </label>
                   <Input
@@ -319,6 +320,7 @@ const EstimateurInstantane = () => {
                     placeholder="+241 XX XX XX XX"
                     value={customerPhone}
                     onChange={(e) => setCustomerPhone(e.target.value)}
+                    className="border-gray-300 focus:border-batiplus-red-500"
                   />
                 </div>
               </CardContent>
@@ -326,16 +328,16 @@ const EstimateurInstantane = () => {
 
             {/* Options de livraison */}
             {selectedProducts.length > 0 && (
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <Truck className="h-5 w-5 mr-2" />
+              <Card className="bg-white border-gray-200 shadow-sm">
+                <CardHeader className="pb-3">
+                  <CardTitle className="flex items-center text-gray-900">
+                    <Truck className="h-5 w-5 mr-2 text-batiplus-red-600" />
                     Livraison à Domicile
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
                       Adresse complète
                     </label>
                     <Input
@@ -343,10 +345,11 @@ const EstimateurInstantane = () => {
                       placeholder="Votre adresse de livraison..."
                       value={deliveryAddress}
                       onChange={(e) => setDeliveryAddress(e.target.value)}
+                      className="border-gray-300 focus:border-batiplus-red-500"
                     />
                   </div>
                   
-                  <div className="space-y-2">
+                  <div className="space-y-3">
                     <label className="block text-sm font-medium text-gray-700">
                       Zone de livraison
                     </label>
@@ -356,14 +359,14 @@ const EstimateurInstantane = () => {
                         onClick={() => setSelectedDelivery(zone)}
                         className={`p-3 rounded-lg border cursor-pointer transition-all ${
                           selectedDelivery?.id === zone.id
-                            ? 'border-batiplus-red-500 bg-batiplus-red-50'
-                            : 'border-gray-200 hover:border-batiplus-red-300'
+                            ? 'border-batiplus-red-500 bg-red-50 ring-2 ring-batiplus-red-200'
+                            : 'border-gray-200 hover:border-batiplus-red-300 bg-white'
                         }`}
                       >
                         <div className="flex items-center justify-between">
                           <div>
-                            <div className="font-medium text-sm">{zone.zone}</div>
-                            <div className="text-xs text-gray-600 flex items-center">
+                            <div className="font-medium text-sm text-gray-900">{zone.zone}</div>
+                            <div className="text-xs text-gray-600 flex items-center mt-1">
                               <Clock className="h-3 w-3 mr-1" />
                               {zone.duration}
                             </div>
@@ -381,51 +384,51 @@ const EstimateurInstantane = () => {
 
             {/* Résumé de l'estimation */}
             {selectedProducts.length > 0 && (
-              <Card className="bg-batiplus-red-50 border-batiplus-red-200">
-                <CardHeader>
-                  <CardTitle className="text-batiplus-red-700">
+              <Card className="bg-white border-batiplus-red-200 shadow-lg">
+                <CardHeader className="bg-gradient-to-r from-batiplus-red-500 to-batiplus-red-600 text-white rounded-t-lg">
+                  <CardTitle className="text-white font-semibold">
                     Résumé de l'Estimation
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-3">
-                  <div className="flex justify-between">
-                    <span>Sous-total produits:</span>
-                    <span className="font-semibold">
+                <CardContent className="p-6 space-y-4">
+                  <div className="flex justify-between items-center py-2">
+                    <span className="text-gray-700 font-medium">Sous-total produits:</span>
+                    <span className="font-bold text-gray-900 text-lg">
                       {getTotalPrice().toLocaleString()} FCFA
                     </span>
                   </div>
                   
                   {selectedDelivery && (
-                    <div className="flex justify-between">
-                      <span>Livraison {selectedDelivery.zone}:</span>
-                      <span className="font-semibold">
+                    <div className="flex justify-between items-center py-2">
+                      <span className="text-gray-700 font-medium">Livraison {selectedDelivery.zone}:</span>
+                      <span className="font-bold text-gray-900 text-lg">
                         {selectedDelivery.price.toLocaleString()} FCFA
                       </span>
                     </div>
                   )}
                   
-                  <div className="border-t border-batiplus-red-200 pt-3">
-                    <div className="flex justify-between text-lg font-bold text-batiplus-red-700">
-                      <span>Total Général:</span>
-                      <span>{getFinalTotal().toLocaleString()} FCFA</span>
+                  <div className="border-t-2 border-batiplus-red-200 pt-4">
+                    <div className="flex justify-between text-xl font-bold bg-batiplus-red-50 p-3 rounded-lg">
+                      <span className="text-batiplus-red-800">Total Général:</span>
+                      <span className="text-batiplus-red-800">{getFinalTotal().toLocaleString()} FCFA</span>
                     </div>
                   </div>
                   
-                  <div className="pt-4 space-y-2">
+                  <div className="pt-4 space-y-3">
                     <Button 
                       onClick={generatePDF} 
-                      className="w-full bg-batiplus-red-500 hover:bg-batiplus-red-600"
+                      className="w-full bg-batiplus-red-500 hover:bg-batiplus-red-600 text-white font-semibold py-3"
                     >
                       <Download className="h-4 w-4 mr-2" />
                       Télécharger l'Estimation PDF
                     </Button>
                     
-                    <div className="text-xs text-gray-600 text-center space-y-1">
-                      <div className="flex items-center justify-center">
-                        <Shield className="h-3 w-3 mr-1" />
+                    <div className="text-xs text-gray-600 bg-gray-50 p-3 rounded-lg space-y-2">
+                      <div className="flex items-center justify-center font-medium">
+                        <Shield className="h-3 w-3 mr-1 text-green-600" />
                         Estimation valable 48h
                       </div>
-                      <div>À présenter en magasin pour finaliser votre achat</div>
+                      <div className="text-center">À présenter en magasin pour finaliser votre achat</div>
                     </div>
                   </div>
                 </CardContent>

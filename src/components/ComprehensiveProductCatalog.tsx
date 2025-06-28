@@ -20,6 +20,7 @@ interface Product {
   inStock: boolean;
   promotion?: number;
   isPopular?: boolean;
+  image?: string;
 }
 
 interface SelectedProduct extends Product {
@@ -74,62 +75,62 @@ const ComprehensiveProductCatalog = ({ onSelectedProductsChange }: Comprehensive
 
   const products: Product[] = [
     // Gros Œuvre & Structure
-    { id: '1', name: 'Fer à béton Ø8mm', category: 'gros-oeuvre', subcategory: 'Acier & Fer à Béton', price: 8500, unit: 'barre 12m', description: 'Fer à béton haute adhérence', inStock: true, isPopular: true },
-    { id: '2', name: 'Fer à béton Ø10mm', category: 'gros-oeuvre', subcategory: 'Acier & Fer à Béton', price: 12000, unit: 'barre 12m', description: 'Fer à béton haute adhérence', inStock: true },
-    { id: '3', name: 'Ciment Portland CPA 55', category: 'gros-oeuvre', subcategory: 'Ciment & Béton', price: 4500, unit: 'sac 50kg', description: 'Ciment Portland certifié', inStock: true, isPopular: true },
-    { id: '4', name: 'Béton prêt C25/30', category: 'gros-oeuvre', subcategory: 'Ciment & Béton', price: 85000, unit: 'm³', description: 'Béton prêt à l\'emploi', inStock: true },
-    { id: '5', name: 'Treillis soudé ST25', category: 'gros-oeuvre', subcategory: 'Acier & Fer à Béton', price: 15000, unit: 'panneau 2x3m', description: 'Treillis soudé pour dallage', inStock: true },
+    { id: '1', name: 'Fer à béton Ø8mm', category: 'gros-oeuvre', subcategory: 'Acier & Fer à Béton', price: 8500, unit: 'barre 12m', description: 'Fer à béton haute adhérence', inStock: true, isPopular: true, image: 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=300&h=200&fit=crop' },
+    { id: '2', name: 'Fer à béton Ø10mm', category: 'gros-oeuvre', subcategory: 'Acier & Fer à Béton', price: 12000, unit: 'barre 12m', description: 'Fer à béton haute adhérence', inStock: true, image: 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=300&h=200&fit=crop' },
+    { id: '3', name: 'Ciment Portland CPA 55', category: 'gros-oeuvre', subcategory: 'Ciment & Béton', price: 4500, unit: 'sac 50kg', description: 'Ciment Portland certifié', inStock: true, isPopular: true, image: 'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=300&h=200&fit=crop' },
+    { id: '4', name: 'Béton prêt C25/30', category: 'gros-oeuvre', subcategory: 'Ciment & Béton', price: 85000, unit: 'm³', description: 'Béton prêt à l\'emploi', inStock: true, image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=300&h=200&fit=crop' },
+    { id: '5', name: 'Treillis soudé ST25', category: 'gros-oeuvre', subcategory: 'Acier & Fer à Béton', price: 15000, unit: 'panneau 2x3m', description: 'Treillis soudé pour dallage', inStock: true, image: 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=300&h=200&fit=crop' },
 
     // Électricité & Éclairage
-    { id: '6', name: 'Tableau électrique 4 modules', category: 'electricite', subcategory: 'Équipements Électriques', brand: 'Schneider Electric', price: 25000, unit: 'pièce', description: 'Tableau électrique 4 modules', inStock: true },
-    { id: '7', name: 'Câble H07V-U 2.5mm²', category: 'electricite', subcategory: 'Équipements Électriques', brand: 'Legrand', price: 1200, unit: 'mètre', description: 'Câble électrique unifilaire', inStock: true, isPopular: true },
-    { id: '8', name: 'Projecteur LED 50W', category: 'electricite', subcategory: 'Luminaires', brand: 'Eglo', price: 18000, unit: 'pièce', description: 'Projecteur LED extérieur', inStock: true },
-    { id: '9', name: 'Prise 2P+T', category: 'electricite', subcategory: 'Équipements Électriques', brand: 'Legrand', price: 3500, unit: 'pièce', description: 'Prise de courant étanche', inStock: true },
+    { id: '6', name: 'Tableau électrique 4 modules', category: 'electricite', subcategory: 'Équipements Électriques', brand: 'Schneider Electric', price: 25000, unit: 'pièce', description: 'Tableau électrique 4 modules', inStock: true, image: 'https://images.unsplash.com/photo-1621905252472-e945b8bc4b23?w=300&h=200&fit=crop' },
+    { id: '7', name: 'Câble H07V-U 2.5mm²', category: 'electricite', subcategory: 'Équipements Électriques', brand: 'Legrand', price: 1200, unit: 'mètre', description: 'Câble électrique unifilaire', inStock: true, isPopular: true, image: 'https://images.unsplash.com/photo-1621905252472-e945b8bc4b23?w=300&h=200&fit=crop' },
+    { id: '8', name: 'Projecteur LED 50W', category: 'electricite', subcategory: 'Luminaires', brand: 'Eglo', price: 18000, unit: 'pièce', description: 'Projecteur LED extérieur', inStock: true, image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=200&fit=crop' },
+    { id: '9', name: 'Prise 2P+T', category: 'electricite', subcategory: 'Équipements Électriques', brand: 'Legrand', price: 3500, unit: 'pièce', description: 'Prise de courant étanche', inStock: true, image: 'https://images.unsplash.com/photo-1621905252472-e945b8bc4b23?w=300&h=200&fit=crop' },
 
     // Carrelage & Revêtements
-    { id: '10', name: 'Carrelage poli 60x60', category: 'carrelage', subcategory: 'Carrelage Sol & Mur', brand: 'Pamesa', price: 12000, unit: 'm²', description: 'Carrelage poli brillant', inStock: true, isPopular: true },
-    { id: '11', name: 'Faïence salle de bain 30x60', category: 'carrelage', subcategory: 'Carrelage Sol & Mur', brand: 'STN Cerámica', price: 8500, unit: 'm²', description: 'Faïence moderne', inStock: true },
-    { id: '12', name: 'Colle carrelage C2', category: 'carrelage', subcategory: 'Accessoires Pose', price: 4500, unit: 'sac 25kg', description: 'Colle carrelage haute performance', inStock: true },
-    { id: '13', name: 'Outils carreleur Rubi', category: 'carrelage', subcategory: 'Accessoires Pose', brand: 'Rubi', price: 35000, unit: 'kit', description: 'Kit complet carreleur', inStock: true },
+    { id: '10', name: 'Carrelage poli 60x60', category: 'carrelage', subcategory: 'Carrelage Sol & Mur', brand: 'Pamesa', price: 12000, unit: 'm²', description: 'Carrelage poli brillant', inStock: true, isPopular: true, image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=300&h=200&fit=crop' },
+    { id: '11', name: 'Faïence salle de bain 30x60', category: 'carrelage', subcategory: 'Carrelage Sol & Mur', brand: 'STN Cerámica', price: 8500, unit: 'm²', description: 'Faïence moderne', inStock: true, image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=300&h=200&fit=crop' },
+    { id: '12', name: 'Colle carrelage C2', category: 'carrelage', subcategory: 'Accessoires Pose', price: 4500, unit: 'sac 25kg', description: 'Colle carrelage haute performance', inStock: true, image: 'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=300&h=200&fit=crop' },
+    { id: '13', name: 'Outils carreleur Rubi', category: 'carrelage', subcategory: 'Accessoires Pose', brand: 'Rubi', price: 35000, unit: 'kit', description: 'Kit complet carreleur', inStock: true, image: 'https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=300&h=200&fit=crop' },
 
     // Sanitaire & Plomberie
-    { id: '14', name: 'WC suspendu', category: 'sanitaire', subcategory: 'Équipements Sanitaires', brand: 'Jacob Delafon', price: 85000, unit: 'pièce', description: 'WC suspendu avec mécanisme', inStock: true },
-    { id: '15', name: 'Lavabo 60cm', category: 'sanitaire', subcategory: 'Équipements Sanitaires', brand: 'Roca', price: 45000, unit: 'pièce', description: 'Lavabo porcelaine blanche', inStock: true },
-    { id: '16', name: 'Robinet mitigeur', category: 'sanitaire', subcategory: 'Équipements Sanitaires', brand: 'Hansgrohe', price: 65000, unit: 'pièce', description: 'Mitigeur lavabo chromé', inStock: true },
-    { id: '17', name: 'Tube PVC Ø100', category: 'sanitaire', subcategory: 'Plomberie Technique', price: 2500, unit: 'mètre', description: 'Tube PVC évacuation', inStock: true },
-    { id: '18', name: 'Pompe surpresseur', category: 'sanitaire', subcategory: 'Plomberie Technique', brand: 'DAB', price: 125000, unit: 'pièce', description: 'Surpresseur automatique', inStock: true },
+    { id: '14', name: 'WC suspendu', category: 'sanitaire', subcategory: 'Équipements Sanitaires', brand: 'Jacob Delafon', price: 85000, unit: 'pièce', description: 'WC suspendu avec mécanisme', inStock: true, image: 'https://images.unsplash.com/photo-1584622781564-1d987468c7b1?w=300&h=200&fit=crop' },
+    { id: '15', name: 'Lavabo 60cm', category: 'sanitaire', subcategory: 'Équipements Sanitaires', brand: 'Roca', price: 45000, unit: 'pièce', description: 'Lavabo porcelaine blanche', inStock: true, image: 'https://images.unsplash.com/photo-1584622781564-1d987468c7b1?w=300&h=200&fit=crop' },
+    { id: '16', name: 'Robinet mitigeur', category: 'sanitaire', subcategory: 'Équipements Sanitaires', brand: 'Hansgrohe', price: 65000, unit: 'pièce', description: 'Mitigeur lavabo chromé', inStock: true, image: 'https://images.unsplash.com/photo-1584622781564-1d987468c7b1?w=300&h=200&fit=crop' },
+    { id: '17', name: 'Tube PVC Ø100', category: 'sanitaire', subcategory: 'Plomberie Technique', price: 2500, unit: 'mètre', description: 'Tube PVC évacuation', inStock: true, image: 'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=300&h=200&fit=crop' },
+    { id: '18', name: 'Pompe surpresseur', category: 'sanitaire', subcategory: 'Plomberie Technique', brand: 'DAB', price: 125000, unit: 'pièce', description: 'Surpresseur automatique', inStock: true, image: 'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=300&h=200&fit=crop' },
 
     // Peinture & Finitions
-    { id: '19', name: 'Peinture acrylique mate', category: 'peinture', subcategory: 'Peintures', brand: 'Astral', price: 15000, unit: 'pot 15L', description: 'Peinture intérieure mate', inStock: true, promotion: 15, isPopular: true },
-    { id: '20', name: 'Peinture façade', category: 'peinture', subcategory: 'Peintures', brand: 'Astral', price: 18000, unit: 'pot 15L', description: 'Peinture extérieure', inStock: true, promotion: 15 },
-    { id: '21', name: 'Enduit de façade', category: 'peinture', subcategory: 'Peintures', price: 12000, unit: 'sac 25kg', description: 'Enduit décoratif extérieur', inStock: true },
-    { id: '22', name: 'Membrane étanchéité', category: 'peinture', subcategory: 'Étanchéité', brand: 'Sika', price: 25000, unit: 'rouleau 10m²', description: 'Membrane bitumineuse', inStock: true },
+    { id: '19', name: 'Peinture acrylique mate', category: 'peinture', subcategory: 'Peintures', brand: 'Astral', price: 15000, unit: 'pot 15L', description: 'Peinture intérieure mate', inStock: true, promotion: 15, isPopular: true, image: 'https://images.unsplash.com/photo-1562259949-e8e7689d7828?w=300&h=200&fit=crop' },
+    { id: '20', name: 'Peinture façade', category: 'peinture', subcategory: 'Peintures', brand: 'Astral', price: 18000, unit: 'pot 15L', description: 'Peinture extérieure', inStock: true, promotion: 15, image: 'https://images.unsplash.com/photo-1562259949-e8e7689d7828?w=300&h=200&fit=crop' },
+    { id: '21', name: 'Enduit de façade', category: 'peinture', subcategory: 'Peintures', price: 12000, unit: 'sac 25kg', description: 'Enduit décoratif extérieur', inStock: true, image: 'https://images.unsplash.com/photo-1562259949-e8e7689d7828?w=300&h=200&fit=crop' },
+    { id: '22', name: 'Membrane étanchéité', category: 'peinture', subcategory: 'Étanchéité', brand: 'Sika', price: 25000, unit: 'rouleau 10m²', description: 'Membrane bitumineuse', inStock: true, image: 'https://images.unsplash.com/photo-1562259949-e8e7689d7828?w=300&h=200&fit=crop' },
 
     // Outillage & Équipements
-    { id: '23', name: 'Perceuse 18V', category: 'outillage', subcategory: 'Outillage Électroportatif', brand: 'Black & Decker', price: 45000, unit: 'pièce', description: 'Perceuse sans fil avec batterie', inStock: true },
-    { id: '24', name: 'Meuleuse 125mm', category: 'outillage', subcategory: 'Outillage Électroportatif', brand: 'Total Tools', price: 35000, unit: 'pièce', description: 'Meuleuse d\'angle 125mm', inStock: true },
-    { id: '25', name: 'Kit outils Stanley', category: 'outillage', subcategory: 'Outillage Manuel', brand: 'Stanley', price: 25000, unit: 'kit', description: 'Kit 50 outils manuels', inStock: true },
+    { id: '23', name: 'Perceuse 18V', category: 'outillage', subcategory: 'Outillage Électroportatif', brand: 'Black & Decker', price: 45000, unit: 'pièce', description: 'Perceuse sans fil avec batterie', inStock: true, image: 'https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=300&h=200&fit=crop' },
+    { id: '24', name: 'Meuleuse 125mm', category: 'outillage', subcategory: 'Outillage Électroportatif', brand: 'Total Tools', price: 35000, unit: 'pièce', description: 'Meuleuse d\'angle 125mm', inStock: true, image: 'https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=300&h=200&fit=crop' },
+    { id: '25', name: 'Kit outils Stanley', category: 'outillage', subcategory: 'Outillage Manuel', brand: 'Stanley', price: 25000, unit: 'kit', description: 'Kit 50 outils manuels', inStock: true, image: 'https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=300&h=200&fit=crop' },
 
     // Serrurerie & Sécurité
-    { id: '26', name: 'Serrure 3 points', category: 'serrurerie', subcategory: 'Serrurerie', price: 85000, unit: 'pièce', description: 'Serrure haute sécurité', inStock: true },
-    { id: '27', name: 'Coffre-fort numérique', category: 'serrurerie', subcategory: 'Serrurerie', price: 125000, unit: 'pièce', description: 'Coffre-fort électronique', inStock: true },
-    { id: '28', name: 'Grillage galvanisé', category: 'serrurerie', subcategory: 'Serrurerie', price: 8500, unit: 'm²', description: 'Grillage de clôture', inStock: true },
+    { id: '26', name: 'Serrure 3 points', category: 'serrurerie', subcategory: 'Serrurerie', price: 85000, unit: 'pièce', description: 'Serrure haute sécurité', inStock: true, image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=200&fit=crop' },
+    { id: '27', name: 'Coffre-fort numérique', category: 'serrurerie', subcategory: 'Serrurerie', price: 125000, unit: 'pièce', description: 'Coffre-fort électronique', inStock: true, image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=200&fit=crop' },
+    { id: '28', name: 'Grillage galvanisé', category: 'serrurerie', subcategory: 'Serrurerie', price: 8500, unit: 'm²', description: 'Grillage de clôture', inStock: true, image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=200&fit=crop' },
 
     // Aménagement Intérieur
-    { id: '29', name: 'Plaque plâtre BA13', category: 'amenagement', subcategory: 'Faux Plafonds', price: 2500, unit: 'plaque 2.5x1.2m', description: 'Plaque de plâtre standard', inStock: true },
-    { id: '30', name: 'Rail métallique', category: 'amenagement', subcategory: 'Faux Plafonds', price: 1200, unit: 'mètre', description: 'Rail pour cloison', inStock: true },
-    { id: '31', name: 'Tringle rideau automatisée', category: 'amenagement', subcategory: 'Articles de Rideaux', brand: 'Somfy', price: 85000, unit: 'kit 3m', description: 'Tringle motorisée', inStock: true },
+    { id: '29', name: 'Plaque plâtre BA13', category: 'amenagement', subcategory: 'Faux Plafonds', price: 2500, unit: 'plaque 2.5x1.2m', description: 'Plaque de plâtre standard', inStock: true, image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=300&h=200&fit=crop' },
+    { id: '30', name: 'Rail métallique', category: 'amenagement', subcategory: 'Faux Plafonds', price: 1200, unit: 'mètre', description: 'Rail pour cloison', inStock: true, image: 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=300&h=200&fit=crop' },
+    { id: '31', name: 'Tringle rideau automatisée', category: 'amenagement', subcategory: 'Articles de Rideaux', brand: 'Somfy', price: 85000, unit: 'kit 3m', description: 'Tringle motorisée', inStock: true, image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=300&h=200&fit=crop' },
 
     // Piscine & Extérieur
-    { id: '32', name: 'Pompe filtration piscine', category: 'piscine', subcategory: 'Matériel Piscine', brand: 'Astralpool', price: 185000, unit: 'pièce', description: 'Pompe 0.75 CV', inStock: true },
-    { id: '33', name: 'Chlore piscine', category: 'piscine', subcategory: 'Matériel Piscine', brand: 'Astralpool', price: 15000, unit: 'bidon 5kg', description: 'Chlore granulés', inStock: true },
-    { id: '34', name: 'Projecteur LED piscine', category: 'piscine', subcategory: 'Matériel Piscine', brand: 'Astralpool', price: 125000, unit: 'pièce', description: 'Éclairage subaquatique RGB', inStock: true },
+    { id: '32', name: 'Pompe filtration piscine', category: 'piscine', subcategory: 'Matériel Piscine', brand: 'Astralpool', price: 185000, unit: 'pièce', description: 'Pompe 0.75 CV', inStock: true, image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=300&h=200&fit=crop' },
+    { id: '33', name: 'Chlore piscine', category: 'piscine', subcategory: 'Matériel Piscine', brand: 'Astralpool', price: 15000, unit: 'bidon 5kg', description: 'Chlore granulés', inStock: true, image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=300&h=200&fit=crop' },
+    { id: '34', name: 'Projecteur LED piscine', category: 'piscine', subcategory: 'Matériel Piscine', brand: 'Astralpool', price: 125000, unit: 'pièce', description: 'Éclairage subaquatique RGB', inStock: true, image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=300&h=200&fit=crop' },
 
     // Énergie & Groupes Électrogènes
-    { id: '35', name: 'Groupe électrogène 5KVA', category: 'energie', subcategory: 'Alimentation Électrique', price: 285000, unit: 'pièce', description: 'Groupe essence 4 temps', inStock: true },
-    { id: '36', name: 'Onduleur 1000W', category: 'energie', subcategory: 'Alimentation Électrique', price: 85000, unit: 'pièce', description: 'Onduleur pure sinus', inStock: true },
-    { id: '37', name: 'Panneau solaire 300W', category: 'energie', subcategory: 'Alimentation Électrique', price: 125000, unit: 'pièce', description: 'Panneau monocristallin', inStock: true },
-    { id: '38', name: 'Batterie 12V 100Ah', category: 'energie', subcategory: 'Alimentation Électrique', price: 65000, unit: 'pièce', description: 'Batterie AGM solaire', inStock: true }
+    { id: '35', name: 'Groupe électrogène 5KVA', category: 'energie', subcategory: 'Alimentation Électrique', price: 285000, unit: 'pièce', description: 'Groupe essence 4 temps', inStock: true, image: 'https://images.unsplash.com/photo-1621905251918-48416bd8575a?w=300&h=200&fit=crop' },
+    { id: '36', name: 'Onduleur 1000W', category: 'energie', subcategory: 'Alimentation Électrique', price: 85000, unit: 'pièce', description: 'Onduleur pure sinus', inStock: true, image: 'https://images.unsplash.com/photo-1621905251918-48416bd8575a?w=300&h=200&fit=crop' },
+    { id: '37', name: 'Panneau solaire 300W', category: 'energie', subcategory: 'Alimentation Électrique', price: 125000, unit: 'pièce', description: 'Panneau monocristallin', inStock: true, image: 'https://images.unsplash.com/photo-1621905251918-48416bd8575a?w=300&h=200&fit=crop' },
+    { id: '38', name: 'Batterie 12V 100Ah', category: 'energie', subcategory: 'Alimentation Électrique', price: 65000, unit: 'pièce', description: 'Batterie AGM solaire', inStock: true, image: 'https://images.unsplash.com/photo-1621905251918-48416bd8575a?w=300&h=200&fit=crop' }
   ];
 
   // Get unique brands for filter
@@ -521,27 +522,35 @@ const ComprehensiveProductCatalog = ({ onSelectedProductsChange }: Comprehensive
           </Card>
         )}
 
-        {/* Grille des produits avec pagination */}
+        {/* Grille des produits avec images améliorées */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
           {paginatedProducts.map((product) => (
-            <Card key={product.id} className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <CardContent className="p-4">
-                <div className="flex justify-between items-start mb-2">
-                  <Badge variant="secondary" className="text-xs">
+            <Card key={product.id} className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden">
+              <div className="relative h-48 overflow-hidden">
+                <img 
+                  src={product.image || 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=300&h=200&fit=crop'} 
+                  alt={product.name}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="absolute top-2 left-2 flex gap-1">
+                  {product.promotion && (
+                    <Badge className="bg-red-500 text-white text-xs">-{product.promotion}%</Badge>
+                  )}
+                  {product.isPopular && (
+                    <Badge className="bg-yellow-500 text-white text-xs">
+                      <Star className="h-3 w-3 mr-1" />
+                      Populaire
+                    </Badge>
+                  )}
+                </div>
+                <div className="absolute top-2 right-2">
+                  <Badge variant="secondary" className="text-xs bg-white/90">
                     {categories.find(c => c.id === product.category)?.name}
                   </Badge>
-                  <div className="flex gap-1">
-                    {product.promotion && (
-                      <Badge className="bg-red-500 text-white">-{product.promotion}%</Badge>
-                    )}
-                    {product.isPopular && (
-                      <Badge className="bg-yellow-500 text-white">
-                        <Star className="h-3 w-3" />
-                      </Badge>
-                    )}
-                  </div>
                 </div>
-                
+              </div>
+              
+              <CardContent className="p-4">
                 <h3 className="font-semibold text-gray-900 mb-1 line-clamp-2 group-hover:text-batiplus-red-600 transition-colors">
                   {product.name}
                 </h3>

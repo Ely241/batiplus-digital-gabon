@@ -1,7 +1,9 @@
+
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Search, Menu, X, Calculator, Phone, MapPin } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 interface SelectedProduct {
   id: string;
@@ -18,13 +20,22 @@ interface HeaderProps {
 const Header = ({ selectedProducts = [] }: HeaderProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
   const navigateToEstimateur = () => {
-    window.location.href = '/estimateur';
+    navigate('/estimateur');
+  };
+
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+    setIsMenuOpen(false);
   };
 
   const getTotalSelectedProducts = () => {
@@ -56,7 +67,7 @@ const Header = ({ selectedProducts = [] }: HeaderProps) => {
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 cursor-pointer" onClick={() => navigate('/')}>
             <div className="bg-batiplus-black-500 text-white p-2 rounded-lg font-bold">
               <span className="text-xl font-montserrat">B+</span>
             </div>
@@ -85,15 +96,24 @@ const Header = ({ selectedProducts = [] }: HeaderProps) => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-6">
-            <a href="#catalog" className="text-gray-700 hover:text-batiplus-black-500 font-medium transition-colors">
+            <button 
+              onClick={() => scrollToSection('catalog')} 
+              className="text-gray-700 hover:text-batiplus-black-500 font-medium transition-colors"
+            >
               Catalogue
-            </a>
-            <a href="#calculators" className="text-gray-700 hover:text-batiplus-black-500 font-medium transition-colors">
+            </button>
+            <button 
+              onClick={() => scrollToSection('calculators')} 
+              className="text-gray-700 hover:text-batiplus-black-500 font-medium transition-colors"
+            >
               Calculateurs
-            </a>
-            <a href="#services" className="text-gray-700 hover:text-batiplus-black-500 font-medium transition-colors">
+            </button>
+            <button 
+              onClick={() => scrollToSection('services')} 
+              className="text-gray-700 hover:text-batiplus-black-500 font-medium transition-colors"
+            >
               Services
-            </a>
+            </button>
             <Button 
               onClick={navigateToEstimateur}
               className="bg-batiplus-red-500 hover:bg-batiplus-red-600 relative"
@@ -135,19 +155,28 @@ const Header = ({ selectedProducts = [] }: HeaderProps) => {
         {isMenuOpen && (
           <nav className="md:hidden mt-4 py-4 border-t border-gray-200 animate-fade-in">
             <div className="flex flex-col space-y-4">
-              <a href="#catalog" className="text-gray-700 hover:text-batiplus-black-500 font-medium transition-colors">
+              <button 
+                onClick={() => scrollToSection('catalog')} 
+                className="text-gray-700 hover:text-batiplus-black-500 font-medium transition-colors text-left"
+              >
                 Catalogue
-              </a>
-              <a href="#calculators" className="text-gray-700 hover:text-batiplus-black-500 font-medium transition-colors">
+              </button>
+              <button 
+                onClick={() => scrollToSection('calculators')} 
+                className="text-gray-700 hover:text-batiplus-black-500 font-medium transition-colors text-left"
+              >
                 Calculateurs
-              </a>
-              <a href="#services" className="text-gray-700 hover:text-batiplus-black-500 font-medium transition-colors">
+              </button>
+              <button 
+                onClick={() => scrollToSection('services')} 
+                className="text-gray-700 hover:text-batiplus-black-500 font-medium transition-colors text-left"
+              >
                 Services
-              </a>
+              </button>
               <Button 
                 size="sm" 
                 onClick={navigateToEstimateur}
-                className="bg-batiplus-red-500 hover:bg-batiplus-red-600 relative"
+                className="bg-batiplus-red-500 hover:bg-batiplus-red-600 relative self-start"
               >
                 <Calculator className="h-4 w-4 mr-2" />
                 Estimateur Instantané

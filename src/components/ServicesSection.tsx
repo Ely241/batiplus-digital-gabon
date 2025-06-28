@@ -54,6 +54,14 @@ const ServicesSection = () => {
     "Centre-ville", "Akandé", "Oloumi", "Batterie IV", "Lalala", "Nombakélé"
   ];
 
+  const handleContactCall = () => {
+    window.location.href = 'tel:+24162021111';
+  };
+
+  const handleDeliveryCalculator = () => {
+    window.location.href = '/estimateur';
+  };
+
   return (
     <section id="services" className="py-20 bg-gradient-to-br from-gray-50 via-white to-blue-50">
       <div className="container mx-auto px-4">
@@ -156,7 +164,11 @@ const ServicesSection = () => {
                 </div>
               </div>
 
-              <Button size="lg" className="bg-batiplus-blue-500 hover:bg-batiplus-blue-600 text-white px-8 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all">
+              <Button 
+                size="lg" 
+                onClick={handleDeliveryCalculator}
+                className="bg-batiplus-blue-500 hover:bg-batiplus-blue-600 text-white px-8 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all"
+              >
                 <MapPin className="h-5 w-5 mr-2" />
                 Calculer les Frais de Livraison
               </Button>
@@ -202,6 +214,7 @@ const ServicesSection = () => {
                 
                 <Button 
                   variant="outline" 
+                  onClick={handleContactCall}
                   className="w-full mt-8 border-2 border-white text-white hover:bg-white hover:text-batiplus-blue-700 font-semibold py-3 rounded-xl transition-all"
                 >
                   <Phone className="h-5 w-5 mr-2" />
@@ -226,7 +239,11 @@ const ServicesSection = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button size="lg" className="bg-batiplus-orange-500 hover:bg-batiplus-orange-600 text-white px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all">
+            <Button 
+              size="lg" 
+              onClick={handleContactCall}
+              className="bg-batiplus-orange-500 hover:bg-batiplus-orange-600 text-white px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all"
+            >
               <Phone className="h-5 w-5 mr-2" />
               Appel d'Urgence
             </Button>
